@@ -125,10 +125,7 @@ class ProductScreenState extends State<ProductScreen> {
                     ),
                   ),
                   Text(
-                    product.description,
-                    style: TextStyle(
-                      fontSize: 16.0
-                    ),
+                    product.description
                   )
                 ],
               ),
@@ -137,3 +134,4 @@ class ProductScreenState extends State<ProductScreen> {
         ));
   }
 }
+
