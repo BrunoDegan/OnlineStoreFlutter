@@ -9,19 +9,20 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final addressController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   void onSuccess() {
     scaffoldKey.currentState.showSnackBar(
       SnackBar(
         content: Text("Usuário criado com sucesso"),
-      backgroundColor: Theme.of(context).primaryColor,
-      duration: Duration(seconds: 2),),
+        backgroundColor: Theme.of(context).primaryColor,
+        duration: Duration(seconds: 2),
+      ),
     );
     Future.delayed(Duration(seconds: 2)).then((_) {
       Navigator.of(context).pop();
@@ -33,13 +34,15 @@ class _SignupScreenState extends State<SignupScreen> {
       SnackBar(
         content: Text("Falha ao criar usuário"),
         backgroundColor: Colors.redAccent,
-        duration: Duration(seconds: 2),),
+        duration: Duration(seconds: 2),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: scaffoldKey,
         appBar: AppBar(
           title: Text("Criar Conta"),
           centerTitle: true,
@@ -50,7 +53,7 @@ class _SignupScreenState extends State<SignupScreen> {
               return Center(child: CircularProgressIndicator());
             } else {
               return Form(
-                key: formKey,
+                key: _formKey,
                 child: ListView(
                   padding: EdgeInsets.all(16.0),
                   children: <Widget>[
@@ -63,16 +66,16 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     TextFormField(
                       controller: emailController,
-                      decoration: InputDecoration(
-                          hintText: "E-mail"
-                      ),
+                      decoration: InputDecoration(hintText: "E-mail"),
                       keyboardType: TextInputType.emailAddress,
                       validator: (text) {
                         if (text.isEmpty || !text.contains("@"))
                           return "Email inválido";
                       },
                     ),
-                    SizedBox(height: 16.0,),
+                    SizedBox(
+                      height: 16.0,
+                    ),
                     TextFormField(
                       controller: passwordController,
                       decoration: InputDecoration(
@@ -105,7 +108,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           textColor: Colors.white,
                           color: Theme.of(context).primaryColor,
                           onPressed: () {
-                            if (formKey.currentState.validate()) {
+                            if (_formKey.currentState.validate()) {
                               Map<String, dynamic> userData = {
                                 "name": nameController.text,
                                 "email": emailController.text,
