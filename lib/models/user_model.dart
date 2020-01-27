@@ -10,9 +10,9 @@ class UserModel extends Model {
   Map<String, dynamic> userData;
 
   @override
-  void addListener(VoidCallback listener) {
+  void addListener(VoidCallback listener) async {
     super.addListener(listener);
-    loadCurrentUser();
+    await loadCurrentUser();
   }
 
   Future<Null> saveUserData(Map<String, dynamic> userData) async {
@@ -37,20 +37,18 @@ class UserModel extends Model {
             email: userData["email"], password: pass)
         .then((user) {
       firebaseUser = user.user;
-      saveUserData(userData);
-
-      onSuccess();
       isLoading = false;
+      saveUserData(userData);
+      onSuccess();
     }).catchError((onError) {
-      onFailed();
       isLoading = false;
       notifyListeners();
+      onFailed();
     });
   }
 
   Future<Null> loadCurrentUser() async {
-    if (firebaseUser == null)
-      firebaseUser = await firebaseAuth.currentUser();
+    if (firebaseUser == null) firebaseUser = await firebaseAuth.currentUser();
 
     if (firebaseUser != null) {
       if (userData["name"] == null) {
@@ -61,7 +59,6 @@ class UserModel extends Model {
         userData = docUser.data;
       }
     }
-
     notifyListeners();
   }
 
@@ -90,7 +87,9 @@ class UserModel extends Model {
     });
   }
 
-  void recoverPassword() {}
+  void recoverPassword(String email) {
+    firebaseAuth.sendPasswordResetEmail(email: email);
+  }
 
   bool isLoggedIn() {
     return firebaseUser != null;

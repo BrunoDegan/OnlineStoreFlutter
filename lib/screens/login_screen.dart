@@ -39,7 +39,7 @@ class LoginScreenState extends State<LoginScreen> {
           ],
         ),
         body:
-        ScopedModelDescendant<UserModel>(builder: (context, child, model) {
+            ScopedModelDescendant<UserModel>(builder: (context, child, model) {
           if (model.isLoading) {
             return Center(child: CircularProgressIndicator());
           } else {
@@ -74,7 +74,21 @@ class LoginScreenState extends State<LoginScreen> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: FlatButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (emailController.text.isEmpty) {
+                          scaffoldKey.currentState.showSnackBar(SnackBar(
+                            content: Text("Insira seu email para recuperação"),
+                            backgroundColor: Colors.redAccent,
+                            duration: Duration(seconds: 2),
+                          ));
+                        } else {
+                          model.recoverPassword(emailController.text);
+                          scaffoldKey.currentState.showSnackBar(SnackBar(
+                              content: Text("Confira seu e-mail"),
+                              backgroundColor: Theme.of(context).primaryColor,
+                              duration: Duration(seconds: 2)));
+                        }
+                      },
                       child: Text(
                         "Esqueci minha senha",
                         textAlign: TextAlign.right,
@@ -91,9 +105,7 @@ class LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(fontSize: 18.0),
                         ),
                         textColor: Colors.white,
-                        color: Theme
-                            .of(context)
-                            .primaryColor,
+                        color: Theme.of(context).primaryColor,
                         onPressed: () {
                           if (formKey.currentState.validate()) {
                             model.signIn(
@@ -117,9 +129,9 @@ class LoginScreenState extends State<LoginScreen> {
 
   void onFailed() {
     scaffoldKey.currentState.showSnackBar(SnackBar(
-        content: Text("Falha ao entrar "),
-        backgroundColor: Colors.redAccent,
-        duration: Duration(seconds: 2),
+      content: Text("Falha ao entrar "),
+      backgroundColor: Colors.redAccent,
+      duration: Duration(seconds: 2),
     ));
   }
 }
