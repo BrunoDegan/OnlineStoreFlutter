@@ -30,8 +30,8 @@ class CategoryScreen extends StatelessWidget {
                     .document(snapshot.documentID)
                     .collection("items")
                     .getDocuments(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
+                builder: (context, documentSnapshot) {
+                  if (!documentSnapshot.hasData) {
                     return Center(child: CircularProgressIndicator());
                   } else {
                     return TabBarView(
@@ -45,21 +45,22 @@ class CategoryScreen extends StatelessWidget {
                                     mainAxisSpacing: 4.0,
                                     crossAxisSpacing: 4.0,
                                     childAspectRatio: 0.65),
-                            itemCount: snapshot.data.documents.length,
+                            itemCount: documentSnapshot.data.documents.length,
                             itemBuilder: (context, index) {
-                              return ProductTile(
-                                  "grid",
-                                  ProductData.fromDocument(
-                                      snapshot.data.documents[index]));
+                              ProductData pData = ProductData.fromDocument(
+                                  documentSnapshot.data.documents[index]);
+                              pData.category = this.snapshot.documentID;
+
+                              return ProductTile("grid", pData);
                             }),
                         ListView.builder(
                             padding: EdgeInsets.all(4.0),
-                            itemCount: snapshot.data.documents.length,
+                            itemCount: documentSnapshot.data.documents.length,
                             itemBuilder: (context, index) {
-                              return ProductTile(
-                                  "list",
-                                  ProductData.fromDocument(
-                                      (snapshot.data.documents[index])));
+                              ProductData pData = ProductData.fromDocument(
+                                  documentSnapshot.data.documents[index]);
+                              pData.category = this.snapshot.documentID;
+                              return ProductTile("list", pData);
                             })
                       ],
                     );

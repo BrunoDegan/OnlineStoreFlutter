@@ -12,9 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScopedModel<UserModel>(
         model: UserModel(),
-        child: ScopedModelDescendant(builder: (context, child, userModel) {
+        child:
+            ScopedModelDescendant<UserModel>(builder: (context, child, model) {
           return ScopedModel<CartModel>(
-            model: CartModel(userModel),
+            model: CartModel(model),
             child: MaterialApp(
               theme: ThemeData(
                 primarySwatch: Colors.blue,

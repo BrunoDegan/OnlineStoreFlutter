@@ -8,6 +8,8 @@ class CartProduct {
   int qtd;
   String size;
 
+  CartProduct();
+
   ProductData productData;
 
   CartProduct.fromDocument(DocumentSnapshot snapshot) {

@@ -2,7 +2,7 @@ import 'package:cache_image/cache_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:onlinestore/data/product_data.dart';
-import 'package:onlinestore/tiles/product_description_screen.dart';
+import 'package:onlinestore/screens/product_description_screen.dart';
 
 class ProductTile extends StatelessWidget {
   final String type;

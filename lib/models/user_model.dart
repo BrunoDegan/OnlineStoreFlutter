@@ -9,13 +9,17 @@ class UserModel extends Model {
   FirebaseUser firebaseUser;
   Map<String, dynamic> userData;
 
+  static UserModel of(BuildContext context) {
+    return ScopedModel.of<UserModel>(context);
+  }
+
   @override
   void addListener(VoidCallback listener) async {
     super.addListener(listener);
-    await loadCurrentUser();
+    await _loadCurrentUser();
   }
 
-  Future<Null> saveUserData(Map<String, dynamic> userData) async {
+  Future<Null> _saveUserData(Map<String, dynamic> userData) async {
     this.userData = userData;
 
     await Firestore.instance
@@ -35,23 +39,25 @@ class UserModel extends Model {
     await firebaseAuth
         .createUserWithEmailAndPassword(
             email: userData["email"], password: pass)
-        .then((user) {
+        .then((user) async {
       firebaseUser = user.user;
-      isLoading = false;
-      saveUserData(userData);
+      await _saveUserData(userData);
       onSuccess();
-    }).catchError((onError) {
       isLoading = false;
       notifyListeners();
+    }).catchError((onError) {
+      isLoading = false;
       onFailed();
+      notifyListeners();
     });
   }
 
-  Future<Null> loadCurrentUser() async {
-    if (firebaseUser == null) firebaseUser = await firebaseAuth.currentUser();
+  Future<Null> _loadCurrentUser() async {
+    if (firebaseUser == null)
+      firebaseUser = await firebaseAuth.currentUser();
 
     if (firebaseUser != null) {
-      if (userData["name"] == null) {
+      if (userData != null && userData["name"] == null) {
         DocumentSnapshot docUser = await Firestore.instance
             .collection("users")
             .document(firebaseUser.uid)
@@ -68,22 +74,21 @@ class UserModel extends Model {
       @required VoidCallback onSuccess,
       @required VoidCallback onFailed}) async {
     isLoading = true;
-    notifyListeners();
 
     firebaseAuth
         .signInWithEmailAndPassword(email: email, password: password)
         .then((authResult) async {
       firebaseUser = authResult.user;
 
-      await loadCurrentUser();
+      await _loadCurrentUser();
 
       onSuccess();
-      notifyListeners();
       isLoading = false;
+      notifyListeners();
     }).catchError((error) {
       onFailed();
-      notifyListeners();
       isLoading = false;
+      notifyListeners();
     });
   }
 
