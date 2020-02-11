@@ -60,6 +60,7 @@ class CategoryScreen extends StatelessWidget {
                               ProductData pData = ProductData.fromDocument(
                                   documentSnapshot.data.documents[index]);
                               pData.category = this.snapshot.documentID;
+
                               return ProductTile("list", pData);
                             })
                       ],

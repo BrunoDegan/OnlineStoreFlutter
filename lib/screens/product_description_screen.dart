@@ -6,7 +6,6 @@ import 'package:onlinestore/data/cart_product.dart';
 import 'package:onlinestore/data/product_data.dart';
 import 'package:onlinestore/models/cart_model.dart';
 import 'package:onlinestore/models/user_model.dart';
-import 'package:onlinestore/screens/cart_screen.dart';
 import 'package:onlinestore/screens/login_screen.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -116,7 +115,6 @@ class ProductScreenState extends State<ProductScreen> {
                       onPressed: sizeSelected != null
                           ? () {
                               if (UserModel.of(context).isLoggedIn()) {
-
                                 CartProduct cartProduct = CartProduct();
                                 cartProduct.size = sizeSelected;
                                 cartProduct.qtd = 1;
@@ -124,8 +122,7 @@ class ProductScreenState extends State<ProductScreen> {
                                 cartProduct.category = product.category;
 
                                 CartModel.of(context).addCartItem(cartProduct);
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => CartScreen()));
+
                               } else {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => LoginScreen()));
@@ -134,8 +131,12 @@ class ProductScreenState extends State<ProductScreen> {
                           : null,
                       color: primaryColor,
                       textColor: Colors.white,
-                      child: Text("Adicionar ao carrinho",
-                          style: TextStyle(fontSize: 18.0)),
+                      child: Text(
+                          UserModel.of(context).isLoggedIn()
+                              ? "Adicionar ao carrinho"
+                              : "Entre para comprar",
+                          style: TextStyle(fontSize: 18.0),
+                      ),
                     ),
                   ),
                   SizedBox(

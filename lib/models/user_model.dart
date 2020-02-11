@@ -14,9 +14,9 @@ class UserModel extends Model {
   }
 
   @override
-  void addListener(VoidCallback listener) async {
+  void addListener(VoidCallback listener)  {
     super.addListener(listener);
-    await _loadCurrentUser();
+    loadCurrentUser();
   }
 
   Future<Null> _saveUserData(Map<String, dynamic> userData) async {
@@ -41,7 +41,9 @@ class UserModel extends Model {
             email: userData["email"], password: pass)
         .then((user) async {
       firebaseUser = user.user;
+
       await _saveUserData(userData);
+
       onSuccess();
       isLoading = false;
       notifyListeners();
@@ -52,20 +54,18 @@ class UserModel extends Model {
     });
   }
 
-  Future<Null> _loadCurrentUser() async {
+  Future<Null> loadCurrentUser() async {
     if (firebaseUser == null)
       firebaseUser = await firebaseAuth.currentUser();
 
-    if (firebaseUser != null) {
-      if (userData != null && userData["name"] == null) {
-        DocumentSnapshot docUser = await Firestore.instance
+    DocumentSnapshot docUser = await Firestore.instance
             .collection("users")
             .document(firebaseUser.uid)
             .get();
         userData = docUser.data;
-      }
-    }
-    notifyListeners();
+
+        notifyListeners();
+
   }
 
   void signIn(
@@ -80,7 +80,7 @@ class UserModel extends Model {
         .then((authResult) async {
       firebaseUser = authResult.user;
 
-      await _loadCurrentUser();
+      await loadCurrentUser();
 
       onSuccess();
       isLoading = false;
