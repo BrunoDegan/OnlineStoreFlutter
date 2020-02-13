@@ -7,7 +7,7 @@ class ProductData {
   String  title;
   String description;
   double price;
-  List<String> imagesUrl;
+  List<dynamic> imagesUrl;
   List sizes;
 
   ProductData.fromDocument(DocumentSnapshot snapshot) {
