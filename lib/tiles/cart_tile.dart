@@ -1,5 +1,5 @@
+import 'package:cache_image/cache_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:onlinestore/data/cart_product.dart';
@@ -18,7 +18,7 @@ class CartTile extends StatelessWidget {
         Container(
             padding: EdgeInsets.all(8.0),
             width: 120.0,
-            child: Image(image: NetworkImage(cartProduct.productData.imagesUrl[0])),
+            child: Image(image: CacheImage(cartProduct.productData.imagesUrl[0])),
         ),
         Expanded(
             child: Container(
@@ -98,15 +98,5 @@ class CartTile extends StatelessWidget {
                   }
                 })
             : buildWidget());
-  }
-
-  Future<dynamic> getImageUrl() async {
-    var imageRef = FirebaseStorage.instance
-        .ref()
-        .child(cartProduct.productData.imagesUrl[0]);
-
-    String url = await imageRef.getDownloadURL();
-
-    return url;
   }
 }
