@@ -18,15 +18,16 @@ class CartModel extends Model {
     return ScopedModel.of<CartModel>(context);
   }
 
-  void addCartItem(CartProduct product) {
-    products.add(product);
+  void addCartItem(CartProduct cartProduct) {
+    products.add(cartProduct);
+
     Firestore.instance
         .collection("users")
         .document(userModel.firebaseUser.uid)
         .collection("cart")
-        .add(product.toMap())
+        .add(cartProduct.toMap())
         .then((response) {
-      product.id = response.documentID;
+      cartProduct.id = response.documentID;
     });
 
     notifyListeners();
@@ -36,7 +37,7 @@ class CartModel extends Model {
     Firestore.instance
         .collection("users")
         .document(userModel.firebaseUser.uid)
-        .collection("chart")
+        .collection("cart")
         .document(cartProduct.id)
         .delete();
 
@@ -83,4 +84,9 @@ class CartModel extends Model {
 
     notifyListeners();
   }
+
+  void updatePrices(){
+    notifyListeners();
+  }
+
 }

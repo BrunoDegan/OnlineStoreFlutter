@@ -6,6 +6,7 @@ import 'package:onlinestore/data/cart_product.dart';
 import 'package:onlinestore/data/product_data.dart';
 import 'package:onlinestore/models/cart_model.dart';
 import 'package:onlinestore/models/user_model.dart';
+import 'package:onlinestore/screens/cart_screen.dart';
 import 'package:onlinestore/screens/login_screen.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -120,9 +121,12 @@ class ProductScreenState extends State<ProductScreen> {
                                 cartProduct.qtd = 1;
                                 cartProduct.productId = product.id;
                                 cartProduct.category = product.category;
+                                cartProduct.productData = product;
 
                                 CartModel.of(context).addCartItem(cartProduct);
 
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => CartScreen()));
                               } else {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => LoginScreen()));
@@ -132,10 +136,10 @@ class ProductScreenState extends State<ProductScreen> {
                       color: primaryColor,
                       textColor: Colors.white,
                       child: Text(
-                          UserModel.of(context).isLoggedIn()
-                              ? "Adicionar ao carrinho"
-                              : "Entre para comprar",
-                          style: TextStyle(fontSize: 18.0),
+                        UserModel.of(context).isLoggedIn()
+                            ? "Adicionar ao carrinho"
+                            : "Entre para comprar",
+                        style: TextStyle(fontSize: 18.0),
                       ),
                     ),
                   ),
