@@ -35,7 +35,7 @@ class CartTile extends StatelessWidget {
                       Text("Tamanho: ${cartProduct.size}",
                           style: TextStyle(fontWeight: FontWeight.w300)),
                       Text(
-                          "R\ ${cartProduct.productData.price.toStringAsFixed(2)}",
+                          "R\$\ ${cartProduct.productData.price.toStringAsFixed(2)}",
                           style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 16.0,
