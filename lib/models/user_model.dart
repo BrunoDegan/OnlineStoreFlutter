@@ -47,10 +47,13 @@ class UserModel extends Model {
       onSuccess();
       isLoading = false;
       notifyListeners();
+
     }).catchError((onError) {
+
       isLoading = false;
       onFailed();
       notifyListeners();
+
     });
   }
 
@@ -58,13 +61,15 @@ class UserModel extends Model {
     if (firebaseUser == null)
       firebaseUser = await firebaseAuth.currentUser();
 
-    DocumentSnapshot docUser = await Firestore.instance
-            .collection("users")
-            .document(firebaseUser.uid)
-            .get();
-        userData = docUser.data;
+    if (firebaseUser != null) {
+      DocumentSnapshot docUser = await Firestore.instance
+          .collection("users")
+          .document(firebaseUser.uid)
+          .get();
+      userData = docUser.data;
 
-        notifyListeners();
+      notifyListeners();
+    }
 
   }
 
