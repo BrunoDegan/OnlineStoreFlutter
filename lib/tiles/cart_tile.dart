@@ -14,11 +14,13 @@ class CartTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget buildWidget() {
+      CartModel.of(context).updatePrices();
+
       return Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
         Container(
-            padding: EdgeInsets.all(8.0),
-            width: 120.0,
-            child: Image(image: CacheImage(cartProduct.productData.imagesUrl[0])),
+          padding: EdgeInsets.all(8.0),
+          width: 120.0,
+          child: Image(image: CacheImage(cartProduct.productData.imagesUrl[0])),
         ),
         Expanded(
             child: Container(

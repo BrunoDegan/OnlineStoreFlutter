@@ -2,12 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:onlinestore/data/cart_product.dart';
 import 'package:onlinestore/models/user_model.dart';
+import 'package:onlinestore/widgets/cart_price.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class CartModel extends Model {
   List<CartProduct> products = [];
   UserModel userModel;
   bool isLoading = false;
+  String cupomCode;
+  int discountPercentage = 0;
 
   CartModel(this.userModel){
     if(userModel.isLoggedIn())
@@ -85,8 +88,31 @@ class CartModel extends Model {
     notifyListeners();
   }
 
+  double getProductPrice() {
+    double price = 0.0;
+    for(CartProduct product in products) {
+      if(product != null) {
+        price += product.qtd * product.productData.price;
+      }
+    }
+
+    return price;
+  }
+
+  double getDiscount(){
+    return getProductPrice() * discountPercentage / 100;
+  }
+  double getShipPrice(){
+    return 9.99;
+  }
+
   void updatePrices(){
     notifyListeners();
+  }
+
+  void setCupon(String cuponCode, int discountPercentage) {
+    this.cupomCode = cuponCode;
+    this.discountPercentage = discountPercentage;
   }
 
 }

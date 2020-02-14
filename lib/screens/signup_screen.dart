@@ -25,7 +25,7 @@ class SignupScreenState extends State<SignupScreen> {
         duration: Duration(seconds: 2),
       ),
     );
-    Future.delayed(Duration(seconds: 2)).then((_) {
+    Future.delayed(Duration(seconds: 3)).then((_) {
       Navigator.of(context).pop();
     });
   }
