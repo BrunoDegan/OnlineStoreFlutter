@@ -7,7 +7,6 @@ class ProductsTabs extends StatelessWidget {
 
   final String products = "products";
 
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<QuerySnapshot>(
