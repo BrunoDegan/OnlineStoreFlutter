@@ -16,7 +16,8 @@ class CartPrice extends StatelessWidget {
           padding: EdgeInsets.all(16.0),
           child: ScopedModelDescendant<CartModel>(
             builder: (context, child, model) {
-              double price = model.getProductPrice();
+
+              double price = model.getOrderValue();
               double discount = model.getDiscount();
               double shipmentPrice = model.getShipPrice();
 
@@ -81,7 +82,9 @@ class CartPrice extends StatelessWidget {
                     child: Text('Finalizar pedido'),
                     textColor: Colors.white,
                     color: Theme.of(context).primaryColor,
-                    onPressed: () {},
+                    onPressed: () {
+                      buy();
+                    },
                   )
                 ],
               );
