@@ -17,12 +17,14 @@ class OrderTabs extends StatelessWidget {
               .getDocuments(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return CircularProgressIndicator();
+              return Center(
+               child: CircularProgressIndicator()
+              );
             } else {
               return ListView(
                   children: snapshot.data.documents
                       .map((doc) => OrderTile(doc.documentID))
-                      .toList());
+                      .toList().reversed.toList());
             }
           });
     } else {
