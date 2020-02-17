@@ -37,19 +37,19 @@ class PlacesTile extends StatelessWidget {
                       textAlign: TextAlign.start,
                     )
                   ],
-                )
-            ),
+                )),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                 FlatButton(
-                   child: Text("Ver no mapa"),
-                   textColor: Colors.blue,
-                   padding: EdgeInsets.zero,
-                   onPressed: () {
-                     launch("http://www.google.com/maps/search/?api=1&query=${snapshot.data[""]}");
-                   },
-                 ),
-
+                FlatButton(
+                  child: Text("Ver no mapa"),
+                  textColor: Colors.blue,
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    launch(
+                        "http://www.google.com/maps/search/?api=1&query=${snapshot.data["latitude"]}, ${snapshot.data["longitude"]}");
+                  },
+                ),
                 FlatButton(
                   child: Text("Ligar"),
                   textColor: Colors.blue,
