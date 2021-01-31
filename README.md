@@ -1,7 +1,3 @@
-# Onlinestore
+# Online Store 
 
-Online Store made with Flutter and Firebase.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
+Online Store made with Flutter and Firebase API. Provide new Firebase API Key and images for fully functional app usage
