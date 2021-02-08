@@ -52,6 +52,7 @@ class LoginScreenState extends State<LoginScreen> {
                     decoration: InputDecoration(hintText: "E-mail"),
                     keyboardType: TextInputType.emailAddress,
                     controller: emailController,
+                    // ignore: missing_return
                     validator: (text) {
                       if (text.isEmpty || !text.contains("@"))
                         return "Email inválido";
@@ -66,6 +67,7 @@ class LoginScreenState extends State<LoginScreen> {
                     ),
                     obscureText: true,
                     controller: passwordController,
+                    // ignore: missing_return
                     validator: (text) {
                       if (text.isEmpty || text.length < 6)
                         return "Senha inválida";

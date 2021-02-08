@@ -9,7 +9,6 @@ class SignupScreen extends StatefulWidget {
 }
 
 class SignupScreenState extends State<SignupScreen> {
-
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -61,6 +60,7 @@ class SignupScreenState extends State<SignupScreen> {
                     TextFormField(
                       controller: nameController,
                       decoration: InputDecoration(hintText: "Nome completo"),
+                      // ignore: missing_return
                       validator: (text) {
                         if (text.isEmpty) return "Nome inválido";
                       },
@@ -69,6 +69,7 @@ class SignupScreenState extends State<SignupScreen> {
                       controller: emailController,
                       decoration: InputDecoration(hintText: "E-mail"),
                       keyboardType: TextInputType.emailAddress,
+                      // ignore: missing_return
                       validator: (text) {
                         if (text.isEmpty || !text.contains("@"))
                           return "Email inválido";
@@ -83,6 +84,7 @@ class SignupScreenState extends State<SignupScreen> {
                         hintText: "Senha",
                       ),
                       obscureText: true,
+                      // ignore: missing_return
                       validator: (text) {
                         if (text.isEmpty || text.length < 6)
                           return "Senha inválida";
@@ -94,6 +96,7 @@ class SignupScreenState extends State<SignupScreen> {
                       decoration: InputDecoration(
                         hintText: "Endereço",
                       ),
+                      // ignore: missing_return
                       validator: (text) {
                         if (text.isEmpty) return "Endereço inválido";
                       },
