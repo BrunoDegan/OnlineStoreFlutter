@@ -56,7 +56,8 @@ class CustomDrawer extends StatelessWidget {
                                     fontWeight: FontWeight.bold),
                               ),
                               GestureDetector(
-                                child: Text(!model.isLoggedIn()
+                                child: Text(
+                                  !model.isLoggedIn()
                                       ? "Entre ou cadastre-se"
                                       : "Sair",
                                   style: TextStyle(
@@ -81,11 +82,11 @@ class CustomDrawer extends StatelessWidget {
                 ),
               ),
               Divider(),
-              DrawerTiles(Icons.home, "Inicio", _pageController, 1),
-              DrawerTiles(Icons.list, "Produtos", _pageController, 2),
-              DrawerTiles(Icons.location_on, "Lojas", _pageController, 3),
+              DrawerTiles(Icons.home, "Inicio", _pageController, 0),
+              DrawerTiles(Icons.list, "Produtos", _pageController, 1),
+              DrawerTiles(Icons.location_on, "Lojas", _pageController, 2),
               DrawerTiles(
-                  Icons.playlist_add_check, "Meus pedidos", _pageController, 4),
+                  Icons.playlist_add_check, "Meus pedidos", _pageController, 3),
             ])
       ],
     ));
