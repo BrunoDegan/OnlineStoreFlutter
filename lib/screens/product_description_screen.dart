@@ -1,5 +1,5 @@
 import 'package:cache_image/cache_image.dart';
-import 'package:carousel_pro/carousel_pro.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:onlinestore/data/cart_product.dart';
@@ -37,20 +37,20 @@ class ProductScreenState extends State<ProductScreen> {
         body: ListView(
           children: <Widget>[
             AspectRatio(
-              aspectRatio: 0.9,
-              child: Carousel(
-                images: product.imagesUrl.map((url) {
-                  return Image(image: CacheImage(url));
-                }).toList(),
-                dotSize: 4.0,
-                dotSpacing: 15.0,
-                dotBgColor: Colors.transparent,
-                dotColor: primaryColor,
-                autoplay: false,
-                animationCurve: Curves.bounceIn,
-                showIndicator: true,
-              ),
-            ),
+                aspectRatio: 0.9,
+                child: CarouselSlider(
+                  items: product.imagesUrl.map((url) {
+                    return Image(
+                      image: CacheImage(url),
+                    );
+                  }).toList(),
+                  options: CarouselOptions(
+                      autoPlayAnimationDuration: const Duration(),
+                      aspectRatio: 2.0,
+                      enlargeCenterPage: true,
+                      enlargeStrategy: CenterPageEnlargeStrategy.height,
+                      autoPlay: true),
+                )),
             Padding(
               padding: EdgeInsets.all(16.0),
               child: Column(
